@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Narrately — AI Image Captioning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="scan-line" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar__mark">
+    <span class="topbar__aperture" aria-hidden="true"></span>
+    <span class="topbar__wordmark">NARRATELY</span>
+  </div>
+  <span class="topbar__status" id="apiStatus" data-state="checking">
+    <span class="dot" aria-hidden="true"></span>checking model
+  </span>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">BLIP vision-language model &middot; runs locally</p>
+    <h1>Point the lens.<br>Read what it sees.</h1>
+    <p class="hero__sub">Drop in a photo or a webpage URL — the model looks, then narrates.</p>
+  </section>
+
+  <section class="console" aria-label="Captioning console">
+
+    <div class="mode-toggle" role="tablist" aria-label="Input mode">
+      <button class="mode-toggle__btn is-active" id="tabUpload" role="tab" aria-selected="true" aria-controls="panelUpload">Upload image</button>
+      <button class="mode-toggle__btn" id="tabWebpage" role="tab" aria-selected="false" aria-controls="panelWebpage">Webpage URL</button>
+    </div>
+
+    <!-- Upload panel -->
+    <div class="panel" id="panelUpload" role="tabpanel" aria-labelledby="tabUpload">
+      <div class="viewfinder" id="dropzone" tabindex="0" role="button"
+           aria-label="Upload an image to caption">
+        <span class="viewfinder__corner viewfinder__corner--tl"></span>
+        <span class="viewfinder__corner viewfinder__corner--tr"></span>
+        <span class="viewfinder__corner viewfinder__corner--bl"></span>
+        <span class="viewfinder__corner viewfinder__corner--br"></span>
+
+        <img class="viewfinder__preview" id="previewImg" alt="" hidden />
+
+        <div class="viewfinder__empty" id="viewfinderEmpty">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 16.5V7.5C4 6.67 4.67 6 5.5 6H8L9.5 4h5L16 6h2.5c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5Z" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+          <p><strong>Drop an image</strong> or click to browse</p>
+          <p class="viewfinder__hint">JPG, PNG, WEBP</p>
+        </div>
+
+        <input type="file" id="fileInput" accept="image/*" hidden />
+      </div>
+
+      <div class="readout" id="uploadReadout" data-state="idle">
+        <span class="readout__label">CAPTION_OUT</span>
+        <p class="readout__text" id="uploadReadoutText">Awaiting image&hellip;</p>
+      </div>
+    </div>
+
+    <!-- Webpage panel -->
+    <div class="panel" id="panelWebpage" role="tabpanel" aria-labelledby="tabWebpage" hidden>
+      <form class="url-form" id="webpageForm">
+        <label class="url-form__label" for="webpageUrl">Webpage URL</label>
+        <div class="url-form__row">
+          <input type="url" id="webpageUrl" placeholder="https://example.com" required autocomplete="off" />
+          <button type="submit" id="webpageSubmit">Scan page</button>
+        </div>
+        <label class="url-form__limit">
+          Max images
+          <input type="number" id="webpageLimit" min="1" max="30" value="8" />
+        </label>
+      </form>
+
+      <div class="readout" id="webpageStatus" data-state="idle">
+        <span class="readout__label">STATUS</span>
+        <p class="readout__text" id="webpageStatusText">Paste a URL and scan the page.</p>
+      </div>
+
+      <div class="results-grid" id="webpageResults" hidden></div>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <p>Developed by Tolulope Oyejide</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
