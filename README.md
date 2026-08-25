@@ -1,4 +1,4 @@
-# Narrately
+# Narrately — Automated Image Captioning Engine
 
 Generate natural-language captions for images using Salesforce's [BLIP](https://arxiv.org/abs/2201.12086) model — from a local file, a direct image URL, or every image on a webpage.
 
